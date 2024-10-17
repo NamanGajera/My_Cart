@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 import 'package:my_cart/Utils/colors.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -16,7 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
   /// Variables---------------
   int bannerIndex = 0;
   late Timer progressTimer;
-  double progressValue = 0;  // Value to track progress (0.0 to 1.0)
+  double progressValue = 0; // Value to track progress (0.0 to 1.0)
 
   @override
   void initState() {
@@ -51,11 +53,10 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
   }
 
-
   /// Controllers----------------
   TextEditingController _serachController = TextEditingController();
-  final CarouselSliderController _carouselController = CarouselSliderController();  // Controller for CarouselSlider
-
+  final CarouselSliderController _carouselController =
+      CarouselSliderController(); // Controller for CarouselSlider
 
   /// Lists And Maps-----------------
   final List<String> categories = [
@@ -100,14 +101,78 @@ class _HomeScreenState extends State<HomeScreen> {
     Color(0xffFFC96F),
   ];
 
+  List<String> productNameList = [
+    'Galaxy Book4 Pro',
+    'Samsung S24 Ultra',
+    'JBL PartyBox Speaker',
+    'Indoor Acer Shoes',
+    'Men Colorblock Casual Jacket',
+    'Apple Watch Series 9',
+    'LG UR7500 108 cm',
+    'Drogo Gaming Chair'
+  ];
+
+  List<String> productBrandName = [
+    'Samsung',
+    'Samsung',
+    'JBL',
+    'Adidas',
+    'Killer',
+    'Apple',
+    'LG',
+    'Drogo',
+  ];
+  List<String> productPriceList = [
+    '64999',
+    '117899',
+    '2599',
+    '1800',
+    '1259',
+    '31699',
+    '26500',
+    '7189',
+  ];
+  List<String> productRattingList = [
+    '4.5',
+    '4.5',
+    '3.5',
+    '3.5',
+    '4.5',
+    '4.5',
+    '3.5',
+    '3.5',
+  ];
+  List<String?> productOffList = [
+    '10',
+    '20',
+    '16',
+    '8',
+    null,
+    '15',
+    '30',
+    null,
+  ];
+
+  List<String> productImageList = [
+    'assets/images/dell_leptop.webp',
+    'assets/images/s24_img.webp',
+    'assets/images/jbl_speaker.webp',
+    'assets/images/adidas_shoes.webp',
+    'assets/images/men_jacket.webp',
+    'assets/images/apple_watch.webp',
+    'assets/images/lg_tv.webp',
+    'assets/images/gaming_chair.webp',
+  ];
+
   @override
   Widget build(BuildContext context) {
     double main_width = MediaQuery.of(context).size.width;
     double main_height = MediaQuery.of(context).size.height;
     return SafeArea(
       child: Scaffold(
-          backgroundColor: Colors.white,
-          body: Padding(
+        backgroundColor: Colors.white,
+        body: SingleChildScrollView(
+          child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 12),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -201,7 +266,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 /// Category
                 SizedBox(height: 12),
                 Text(
-                  'Find Your Style',
+                  'Shop by Category',
                   style: TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.w500,
@@ -283,7 +348,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: SizedBox(
                                   width: main_width - 165,
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         '${bannerTitles[index]}',
@@ -307,22 +373,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                 ),
                               ),
-
                             ],
                           ),
                         );
                       }),
                       options: CarouselOptions(
-                        viewportFraction: 1,
-                        height: 190,
-                        autoPlay: false,
-                        onPageChanged: (index,reason){
-                          setState(() {
-                            bannerIndex = index;
-                            resetProgress();
-                          });
-                        }
-                      ),
+                          viewportFraction: 1,
+                          height: 190,
+                          autoPlay: false,
+                          onPageChanged: (index, reason) {
+                            setState(() {
+                              bannerIndex = index;
+                              resetProgress();
+                            });
+                          }),
                     ),
                     Positioned(
                       bottom: 10,
@@ -330,41 +394,528 @@ class _HomeScreenState extends State<HomeScreen> {
                       left: 0,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: List.generate(bannerTitles.length, (index){
-                          return Container(
-                            margin: EdgeInsets.only(right: 7),
-                            child: Stack(
-                              children: [
-                                Container(
-                                  height: 6,
-                                  width: 24,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white.withOpacity(0.3),
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                ),
-                                // Animated progress bar for the current active item
-                                if (index == bannerIndex)
-                                  AnimatedContainer(
-                                    duration: Duration(milliseconds: 20),  // 10ms update
+                        children: List.generate(
+                          bannerTitles.length,
+                          (index) {
+                            return Container(
+                              margin: EdgeInsets.only(right: 7),
+                              child: Stack(
+                                children: [
+                                  Container(
                                     height: 6,
-                                    width: 24 * progressValue,
+                                    width: 24,
                                     decoration: BoxDecoration(
-                                      color: Colors.white,
+                                      color: Colors.white.withOpacity(0.3),
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                   ),
-                              ],
-                            ),
-                          );
-                        },),
+                                  // Animated progress bar for the current active item
+                                  if (index == bannerIndex)
+                                    AnimatedContainer(
+                                      duration: Duration(
+                                          milliseconds: 20), // 10ms update
+                                      height: 6,
+                                      width: 24 * progressValue,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                    ),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
                       ),
                     ),
                   ],
                 ),
+
+                /// Suggested Products
+                SizedBox(height: 12),
+                Text(
+                  'Suggested for you',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                SizedBox(height: 12),
+
+                GridView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: productImageList.length,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 1,
+                    mainAxisExtent: 228,
+                    crossAxisSpacing: 10,
+                  ),
+                  itemBuilder: (context, index) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                              color: Colors.grey.shade100,
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Stack(
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: Image.asset(
+                                  '${productImageList[index]}',
+                                  fit: BoxFit.contain,
+                                  height: 130,
+                                  width: double.infinity,
+                                ),
+                              ),
+                              Positioned(
+                                right: 0,
+                                child: IconButton(
+                                  onPressed: () {},
+                                  icon: Icon(Icons.favorite_outline),
+                                ),
+                              ),
+                              Positioned(
+                                bottom: 0,
+                                left: 0,
+                                right: 0,
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 12, vertical: 6),
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Colors.transparent,
+                                        Colors.black.withOpacity(0.6),
+                                      ],
+                                      begin: Alignment.topCenter,
+                                      end: Alignment.bottomCenter,
+                                    ),
+                                    borderRadius: BorderRadius.only(
+                                      bottomLeft: Radius.circular(10),
+                                      bottomRight: Radius.circular(10),
+                                    ),
+                                  ),
+                                  child: Text(
+                                    '${productBrandName[index]}',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14,
+                                      shadows: [
+                                        Shadow(
+                                          color: Colors.black26,
+                                          blurRadius: 4,
+                                          offset: Offset(1, 1),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              if (productOffList[index] != null)
+                                Positioned(
+                                  right: 0,
+                                  bottom: 0,
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 15, vertical: 1),
+                                    decoration: BoxDecoration(
+                                      color: primaryGreenColor,
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(10),
+                                        topRight: Radius.circular(10),
+                                      ),
+                                    ),
+                                    child: Text(
+                                      '${productOffList[index]}% off',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 10,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 6),
+                        Padding(
+                          padding: EdgeInsets.only(left: 5),
+                          child: Text(
+                            '${NumberFormat.currency(locale: 'en_IN', symbol: '₹').format(int.parse('${productPriceList[index]}'))}',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(left: 5),
+                          child: Text(
+                            '${productNameList[index]}',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 8),
+                        IntrinsicWidth(
+                          child: Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 5, vertical: 2),
+                              decoration: BoxDecoration(
+                                color: greyBackgroundColor,
+                                borderRadius: BorderRadius.circular(6),
+                              ),
+                              child: Row(
+                                children: [
+                                  SizedBox(width: 5),
+                                  Text(
+                                    '${productRattingList[index]}',
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  SizedBox(width: 5),
+                                  Icon(
+                                    Icons.star,
+                                    color: Colors.amber,
+                                    size: 14,
+                                  ),
+                                ],
+                              )),
+                        ),
+                      ],
+                    );
+                  },
+                ),
+                // Column(
+                //   children: List.generate((productNameList.length / 2).ceil(), (index){
+                //     final firstIndex = index * 2;
+                //     final secondIndex = firstIndex + 1;
+                //     return Padding(
+                //       padding:  EdgeInsets.only(bottom: 15),
+                //       child: Row(
+                //         children: [
+                //           Expanded(
+                //             child: Column(
+                //               crossAxisAlignment: CrossAxisAlignment.start,
+                //               children: [
+                //                 Container(
+                //                   decoration: BoxDecoration(
+                //                       color: Colors.grey.shade100,
+                //                       borderRadius: BorderRadius.circular(10)),
+                //                   child: Stack(
+                //                     children: [
+                //                       ClipRRect(
+                //                         borderRadius: BorderRadius.circular(10),
+                //                         child: Image.asset(
+                //                           '${productImageList[firstIndex]}',
+                //                           fit: BoxFit.contain,
+                //                           height: 130,
+                //                           width: double.infinity,
+                //                         ),
+                //                       ),
+                //                       Positioned(
+                //                         right: 0,
+                //                         child: IconButton(
+                //                           onPressed: () {},
+                //                           icon: Icon(Icons.favorite_outline),
+                //                         ),
+                //                       ),
+                //                       Positioned(
+                //                         bottom: 0,
+                //                         left: 0,
+                //                         right: 0,
+                //                         child: Container(
+                //                           padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                //                           decoration: BoxDecoration(
+                //                             gradient: LinearGradient(
+                //                               colors: [
+                //                                 Colors.transparent,
+                //                                 Colors.black.withOpacity(0.6),
+                //                               ],
+                //                               begin: Alignment.topCenter,
+                //                               end: Alignment.bottomCenter,
+                //                             ),
+                //                             borderRadius: BorderRadius.only(
+                //                               bottomLeft: Radius.circular(10),
+                //                               bottomRight: Radius.circular(10),
+                //                             ),
+                //                           ),
+                //                           child: Text(
+                //                             '${productBrandName[firstIndex]}',
+                //                             style: TextStyle(
+                //                               color: Colors.white,
+                //                               fontWeight: FontWeight.bold,
+                //                               fontSize: 14,
+                //                               shadows: [
+                //                                 Shadow(
+                //                                   color: Colors.black26,
+                //                                   blurRadius: 4,
+                //                                   offset: Offset(1, 1),
+                //                                 ),
+                //                               ],
+                //                             ),
+                //                           ),
+                //                         ),
+                //                       ),
+                //                       if(productOffList[firstIndex] != null)
+                //                       Positioned(
+                //                         right: 0,
+                //                         bottom: 0,
+                //                         child: Container(
+                //                           padding: EdgeInsets.symmetric(
+                //                               horizontal: 15, vertical: 1),
+                //                           decoration: BoxDecoration(
+                //                             color: primaryGreenColor,
+                //                             borderRadius: BorderRadius.only(
+                //                               topLeft: Radius.circular(10),
+                //                               topRight: Radius.circular(10),
+                //                             ),
+                //                           ),
+                //                           child: Text(
+                //                             '${productOffList[firstIndex]}% off',
+                //                             style: TextStyle(
+                //                               color: Colors.white,
+                //                               fontSize: 10,
+                //                             ),
+                //                           ),
+                //                         ),),
+                //                     ],
+                //                   ),
+                //                 ),
+                //                 SizedBox(height: 6),
+                //                 Padding(
+                //                   padding: EdgeInsets.only(left: 5),
+                //                   child: Text(
+                //                     '${NumberFormat.currency(locale: 'en_IN', symbol: '₹').format(int.parse('${productPriceList[firstIndex]}'))}',
+                //                     maxLines: 1,
+                //                     overflow: TextOverflow.ellipsis,
+                //                     style: TextStyle(
+                //                       color: Colors.black,
+                //                       fontSize: 14,
+                //                       fontWeight: FontWeight.w500,
+                //                     ),
+                //                   ),
+                //                 ),
+                //                 Padding(
+                //                   padding: EdgeInsets.only(left: 5),
+                //                   child: Text(
+                //                     '${productNameList[firstIndex]}',
+                //                     maxLines: 1,
+                //                     overflow: TextOverflow.ellipsis,
+                //                     style: TextStyle(
+                //                       color: Colors.black,
+                //                       fontSize: 14,
+                //                       fontWeight: FontWeight.w500,
+                //                     ),
+                //                   ),
+                //                 ),
+                //                 SizedBox(height: 8),
+                //                 IntrinsicWidth(
+                //                   child: Container(
+                //                       padding: EdgeInsets.symmetric(
+                //                           horizontal: 5, vertical: 2),
+                //                       decoration: BoxDecoration(
+                //                         color: greyBackgroundColor,
+                //                         borderRadius: BorderRadius.circular(6),
+                //                       ),
+                //                       child: Row(
+                //                         children: [
+                //                           SizedBox(width: 5),
+                //                           Text(
+                //                             '${productRattingList[firstIndex]}',
+                //                             style: TextStyle(
+                //                               fontSize: 12,
+                //                               fontWeight: FontWeight.w500,
+                //                               color: Colors.black,
+                //                             ),
+                //                           ),
+                //                           SizedBox(width: 5),
+                //                           Icon(
+                //                             Icons.star,
+                //                             color: Colors.amber,
+                //                             size: 14,
+                //                           ),
+                //                         ],
+                //                       )),
+                //                 ),
+                //               ],
+                //             ),
+                //           ),
+                //           SizedBox(width: 10),
+                //           Expanded(
+                //             child: Column(
+                //               crossAxisAlignment: CrossAxisAlignment.start,
+                //               children: [
+                //                 Container(
+                //                   decoration: BoxDecoration(
+                //                       color: Colors.grey.shade100,
+                //                       borderRadius: BorderRadius.circular(10)),
+                //                   child: Stack(
+                //                     children: [
+                //                       ClipRRect(
+                //                         borderRadius: BorderRadius.circular(10),
+                //                         child: Image.asset(
+                //                           '${productImageList[secondIndex]}',
+                //                           fit: BoxFit.contain,
+                //                           height: 130,
+                //                           width: double.infinity,
+                //                         ),
+                //                       ),
+                //                       Positioned(
+                //                         right: 0,
+                //                         child: IconButton(
+                //                           onPressed: () {},
+                //                           icon: Icon(Icons.favorite_outline),
+                //                         ),
+                //                       ),
+                //                       Positioned(
+                //                         bottom: 0,
+                //                         left: 0,
+                //                         right: 0,
+                //                         child: Container(
+                //                           padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                //                           decoration: BoxDecoration(
+                //                             gradient: LinearGradient(
+                //                               colors: [
+                //                                 Colors.transparent,
+                //                                 Colors.black.withOpacity(0.6),
+                //                               ],
+                //                               begin: Alignment.topCenter,
+                //                               end: Alignment.bottomCenter,
+                //                             ),
+                //                             borderRadius: BorderRadius.only(
+                //                               bottomLeft: Radius.circular(10),
+                //                               bottomRight: Radius.circular(10),
+                //                             ),
+                //                           ),
+                //                           child: Text(
+                //                             '${productBrandName[secondIndex]}',
+                //                             style: TextStyle(
+                //                               color: Colors.white,
+                //                               fontWeight: FontWeight.bold,
+                //                               fontSize: 14,
+                //                               shadows: [
+                //                                 Shadow(
+                //                                   color: Colors.black26,
+                //                                   blurRadius: 4,
+                //                                   offset: Offset(1, 1),
+                //                                 ),
+                //                               ],
+                //                             ),
+                //                           ),
+                //                         ),
+                //                       ),
+                //                       if(productOffList[secondIndex] != null)
+                //                         Positioned(
+                //                           right: 0,
+                //                           bottom: 0,
+                //                           child: Container(
+                //                             padding: EdgeInsets.symmetric(
+                //                                 horizontal: 15, vertical: 1),
+                //                             decoration: BoxDecoration(
+                //                               color: primaryGreenColor,
+                //                               borderRadius: BorderRadius.only(
+                //                                 topLeft: Radius.circular(10),
+                //                                 topRight: Radius.circular(10),
+                //                               ),
+                //                             ),
+                //                             child: Text(
+                //                               '${productOffList[secondIndex]}% off',
+                //                               style: TextStyle(
+                //                                 color: Colors.white,
+                //                                 fontSize: 10,
+                //                               ),
+                //                             ),
+                //                           ),),
+                //                     ],
+                //                   ),
+                //                 ),
+                //                 SizedBox(height: 6),
+                //                 Padding(
+                //                   padding: EdgeInsets.only(left: 5),
+                //                   child: Text(
+                //                     '${NumberFormat.currency(locale: 'en_IN', symbol: '₹').format(int.parse('${productPriceList[secondIndex]}'))}',
+                //                     maxLines: 1,
+                //                     overflow: TextOverflow.ellipsis,
+                //                     style: TextStyle(
+                //                       color: Colors.black,
+                //                       fontSize: 14,
+                //                       fontWeight: FontWeight.w500,
+                //                     ),
+                //                   ),
+                //                 ),
+                //                 Padding(
+                //                   padding: EdgeInsets.only(left: 5),
+                //                   child: Text(
+                //                     '${productNameList[secondIndex]}',
+                //                     maxLines: 1,
+                //                     overflow: TextOverflow.ellipsis,
+                //                     style: TextStyle(
+                //                       color: Colors.black,
+                //                       fontSize: 14,
+                //                       fontWeight: FontWeight.w500,
+                //                     ),
+                //                   ),
+                //                 ),
+                //                 SizedBox(height: 8),
+                //                 IntrinsicWidth(
+                //                   child: Container(
+                //                       padding: EdgeInsets.symmetric(
+                //                           horizontal: 5, vertical: 2),
+                //                       decoration: BoxDecoration(
+                //                         color: greyBackgroundColor,
+                //                         borderRadius: BorderRadius.circular(6),
+                //                       ),
+                //                       child: Row(
+                //                         children: [
+                //                           SizedBox(width: 5),
+                //                           Text(
+                //                             '${productRattingList[secondIndex]}',
+                //                             style: TextStyle(
+                //                               fontSize: 12,
+                //                               fontWeight: FontWeight.w500,
+                //                               color: Colors.black,
+                //                             ),
+                //                           ),
+                //                           SizedBox(width: 5),
+                //                           Icon(
+                //                             Icons.star,
+                //                             color: Colors.amber,
+                //                             size: 14,
+                //                           ),
+                //                         ],
+                //                       )),
+                //                 ),
+                //               ],
+                //             ),
+                //           ),
+                //         ],
+                //       ),
+                //     );
+                //   },),
+                // )
               ],
             ),
-          ),),
+          ),
+        ),
+      ),
     );
   }
 }

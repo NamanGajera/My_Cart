@@ -88,14 +88,14 @@ class _BottomNavBarState extends State<BottomNavBar> {
             BottomNavigationBarItem(
               icon: SvgPicture.asset(
                 'assets/svg/home_icon.svg',
-                height: 23,
-                width: 23,
+                height: 21,
+                width: 21,
                 color: Colors.grey,
               ),
               activeIcon: SvgPicture.asset(
                 'assets/svg/home_icon.svg',
-                height: 24,
-                width: 24,
+                height: 22,
+                width: 22,
                 color: primaryGreenColor,
               ),
               label: 'Home',
@@ -103,14 +103,14 @@ class _BottomNavBarState extends State<BottomNavBar> {
             BottomNavigationBarItem(
               icon: SvgPicture.asset(
                 'assets/svg/cart_icon.svg',
-                height: 23,
-                width: 23,
+                height: 21,
+                width: 21,
                 color: Colors.grey,
               ),
               activeIcon: SvgPicture.asset(
                 'assets/svg/cart_icon.svg',
-                height: 24,
-                width: 24,
+                height: 22,
+                width: 22,
                 color: primaryGreenColor,
               ),
               label: 'Cart',
@@ -118,14 +118,14 @@ class _BottomNavBarState extends State<BottomNavBar> {
             BottomNavigationBarItem(
               icon: SvgPicture.asset(
                 'assets/svg/wishlist.svg',
-                height: 23,
-                width: 23,
+                height: 21,
+                width: 21,
                 color: Colors.grey,
               ),
               activeIcon: SvgPicture.asset(
                 'assets/svg/wishlist.svg',
-                height: 24,
-                width: 24,
+                height: 22,
+                width: 22,
                 color: primaryGreenColor,
               ),
               label: 'Wishlist',
@@ -133,14 +133,14 @@ class _BottomNavBarState extends State<BottomNavBar> {
             BottomNavigationBarItem(
               icon: SvgPicture.asset(
                 'assets/svg/menu_icon.svg',
-                height: 23,
-                width: 23,
+                height: 21,
+                width: 21,
                 color: Colors.grey,
               ),
               activeIcon: SvgPicture.asset(
                 'assets/svg/menu_icon.svg',
-                height: 24,
-                width: 24,
+                height: 22,
+                width: 22,
                 color: primaryGreenColor,
               ),
               label: 'Menu',
