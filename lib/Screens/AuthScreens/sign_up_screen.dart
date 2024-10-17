@@ -1,19 +1,20 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:my_cart/Screens/AuthScreens/sign_up_screen.dart';
-import 'package:my_cart/Screens/Widgets/bottom_nav_bar.dart';
-import 'package:my_cart/Utils/colors.dart';
+import 'package:my_cart/Screens/AuthScreens/login_screen.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+import '../../Utils/colors.dart';
+
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController rePasswordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     double main_height = MediaQuery.of(context).size.height;
@@ -27,7 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
               'assets/images/login_image.png',
             ),
             Text(
-              'Welcome Back!',
+              'Creat An Account!',
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 22,
@@ -44,27 +45,27 @@ class _LoginScreenState extends State<LoginScreen> {
                   controller: emailController,
                   cursorColor: primaryYellowColor,
                   decoration: InputDecoration(
-                      contentPadding: EdgeInsets.only(left: 10),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(color: greyTextColor),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(color: primaryGreenColor),
-                      ),
-                      prefixIcon: Icon(
-                        Icons.email,
-                        color: greyBackgroundColor,
-                      ),
-                      labelText: 'Enter Your Email',
-                      labelStyle: TextStyle(
-                        color: greyTextColor,
-                        fontSize: 15,
-                      ),),
+                    contentPadding: EdgeInsets.only(left: 10),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: greyTextColor),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: primaryGreenColor),
+                    ),
+                    prefixIcon: Icon(
+                      Icons.email,
+                      color: greyBackgroundColor,
+                    ),
+                    labelText: 'Email',
+                    labelStyle: TextStyle(
+                      color: greyTextColor,
+                      fontSize: 15,
+                    ),),
                 ),
               ),
             ),
@@ -93,7 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Icons.lock,
                         color: greyBackgroundColor,
                       ),
-                      labelText: 'Enter Your Password',
+                      labelText: 'Password',
                       labelStyle: TextStyle(
                         color: greyTextColor,
                         fontSize: 15,
@@ -101,58 +102,72 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
             ),
+            SizedBox(height: 15),
             Padding(
-              padding:  EdgeInsets.only(right: 18,top: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text('Forgot Password?',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500
-                  ),),
-                ],
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              child: SizedBox(
+                height: 45,
+                child: TextFormField(
+                  controller: rePasswordController,
+                  cursorColor: primaryYellowColor,
+                  decoration: InputDecoration(
+                      contentPadding: EdgeInsets.only(left: 10),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide(color: greyTextColor),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide(color: primaryGreenColor),
+                      ),
+                      prefixIcon: Icon(
+                        Icons.lock,
+                        color: greyBackgroundColor,
+                      ),
+                      labelText: 'Conform Password',
+                      labelStyle: TextStyle(
+                        color: greyTextColor,
+                        fontSize: 15,
+                      )),
+                ),
               ),
             ),
             SizedBox(height: 50),
-            GestureDetector(
-              onTap: (){
-                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>BottomNavBar(),),);
-              },
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 80,vertical: 10),
-                decoration: BoxDecoration(
-                  color: primaryYellowColor,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Text('LOGIN',
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 80,vertical: 10),
+              decoration: BoxDecoration(
+                color: primaryYellowColor,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Text('SIGN UP',
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
                 ),),
-              ),
             ),
             SizedBox(height: 100),
             RichText(text: TextSpan(
-              text: 'Don’t have an account yet?  ',
-              style: TextStyle(
-                color: Colors.grey,
-                fontSize: 16,
-              ),
-              children: [
-                TextSpan(
-                  text: 'Sign Up',
-                  style: TextStyle(
-                    color: Colors.red,
-                    fontSize: 16,
-                  ),
-                  recognizer: TapGestureRecognizer()..onTap = (){
-                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>SignUpScreen()));
-                  },
-                )
-              ]
+                text: 'All ready have an account?  ',
+                style: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 16,
+                ),
+                children: [
+                  TextSpan(
+                    text: 'Login',
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontSize: 16,
+                    ),
+                    recognizer: TapGestureRecognizer()..onTap = (){
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
+                    }
+                  )
+                ]
             ),),
           ],
         ),

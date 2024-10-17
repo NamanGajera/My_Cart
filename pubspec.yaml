@@ -17,6 +17,12 @@ dependencies:
   # Svg
   flutter_svg: ^2.0.10+1
 
+  # For Toast Message
+  fluttertoast: ^8.2.8
+
+  # Carousel Slider
+  carousel_slider: ^5.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
