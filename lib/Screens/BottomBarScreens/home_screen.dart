@@ -5,6 +5,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
+import 'package:my_cart/Screens/HomeScreen/product_details_screen.dart';
 import 'package:my_cart/Utils/colors.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -454,152 +455,161 @@ class _HomeScreenState extends State<HomeScreen> {
                     crossAxisSpacing: 10,
                   ),
                   itemBuilder: (context, index) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                              color: Colors.grey.shade100,
-                              borderRadius: BorderRadius.circular(10)),
-                          child: Stack(
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: Image.asset(
-                                  '${productImageList[index]}',
-                                  fit: BoxFit.contain,
-                                  height: 130,
-                                  width: double.infinity,
-                                ),
-                              ),
-                              Positioned(
-                                right: 0,
-                                child: IconButton(
-                                  onPressed: () {},
-                                  icon: Icon(Icons.favorite_outline),
-                                ),
-                              ),
-                              Positioned(
-                                bottom: 0,
-                                left: 0,
-                                right: 0,
-                                child: Container(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 12, vertical: 6),
-                                  decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                      colors: [
-                                        Colors.transparent,
-                                        Colors.black.withOpacity(0.6),
-                                      ],
-                                      begin: Alignment.topCenter,
-                                      end: Alignment.bottomCenter,
-                                    ),
-                                    borderRadius: BorderRadius.only(
-                                      bottomLeft: Radius.circular(10),
-                                      bottomRight: Radius.circular(10),
-                                    ),
-                                  ),
-                                  child: Text(
-                                    '${productBrandName[index]}',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 14,
-                                      shadows: [
-                                        Shadow(
-                                          color: Colors.black26,
-                                          blurRadius: 4,
-                                          offset: Offset(1, 1),
-                                        ),
-                                      ],
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>ProductDetailsScreen(index: index,)));
+                      },
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                                color: Colors.grey.shade100,
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Stack(
+                              children: [
+                                Hero(
+                                  tag: 'product${index}',
+                                  transitionOnUserGestures: true,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: Image.asset(
+                                      '${productImageList[index]}',
+                                      fit: BoxFit.contain,
+                                      height: 130,
+                                      width: double.infinity,
                                     ),
                                   ),
                                 ),
-                              ),
-                              if (productOffList[index] != null)
                                 Positioned(
                                   right: 0,
+                                  child: IconButton(
+                                    onPressed: () {},
+                                    icon: Icon(Icons.favorite_outline),
+                                  ),
+                                ),
+                                Positioned(
                                   bottom: 0,
+                                  left: 0,
+                                  right: 0,
                                   child: Container(
                                     padding: EdgeInsets.symmetric(
-                                        horizontal: 15, vertical: 1),
+                                        horizontal: 12, vertical: 6),
                                     decoration: BoxDecoration(
-                                      color: primaryGreenColor,
+                                      gradient: LinearGradient(
+                                        colors: [
+                                          Colors.transparent,
+                                          Colors.black.withOpacity(0.6),
+                                        ],
+                                        begin: Alignment.topCenter,
+                                        end: Alignment.bottomCenter,
+                                      ),
                                       borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(10),
-                                        topRight: Radius.circular(10),
+                                        bottomLeft: Radius.circular(10),
+                                        bottomRight: Radius.circular(10),
                                       ),
                                     ),
                                     child: Text(
-                                      '${productOffList[index]}% off',
+                                      '${productBrandName[index]}',
                                       style: TextStyle(
                                         color: Colors.white,
-                                        fontSize: 10,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14,
+                                        shadows: [
+                                          Shadow(
+                                            color: Colors.black26,
+                                            blurRadius: 4,
+                                            offset: Offset(1, 1),
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   ),
                                 ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(height: 6),
-                        Padding(
-                          padding: EdgeInsets.only(left: 5),
-                          child: Text(
-                            '${NumberFormat.currency(locale: 'en_IN', symbol: '₹').format(int.parse('${productPriceList[index]}'))}',
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(left: 5),
-                          child: Text(
-                            '${productNameList[index]}',
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 8),
-                        IntrinsicWidth(
-                          child: Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 5, vertical: 2),
-                              decoration: BoxDecoration(
-                                color: greyBackgroundColor,
-                                borderRadius: BorderRadius.circular(6),
-                              ),
-                              child: Row(
-                                children: [
-                                  SizedBox(width: 5),
-                                  Text(
-                                    '${productRattingList[index]}',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.black,
+                                if (productOffList[index] != null)
+                                  Positioned(
+                                    right: 0,
+                                    bottom: 0,
+                                    child: Container(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 15, vertical: 1),
+                                      decoration: BoxDecoration(
+                                        color: primaryGreenColor,
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(10),
+                                          topRight: Radius.circular(10),
+                                        ),
+                                      ),
+                                      child: Text(
+                                        '${productOffList[index]}% off',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 10,
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                  SizedBox(width: 5),
-                                  Icon(
-                                    Icons.star,
-                                    color: Colors.amber,
-                                    size: 14,
-                                  ),
-                                ],
-                              )),
-                        ),
-                      ],
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 6),
+                          Padding(
+                            padding: EdgeInsets.only(left: 5),
+                            child: Text(
+                              '${NumberFormat.currency(locale: 'en_IN', symbol: '₹').format(int.parse('${productPriceList[index]}'))}',
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(left: 5),
+                            child: Text(
+                              '${productNameList[index]}',
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 8),
+                          IntrinsicWidth(
+                            child: Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 5, vertical: 2),
+                                decoration: BoxDecoration(
+                                  color: greyBackgroundColor,
+                                  borderRadius: BorderRadius.circular(6),
+                                ),
+                                child: Row(
+                                  children: [
+                                    SizedBox(width: 5),
+                                    Text(
+                                      '${productRattingList[index]}',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    SizedBox(width: 5),
+                                    Icon(
+                                      Icons.star,
+                                      color: Colors.amber,
+                                      size: 14,
+                                    ),
+                                  ],
+                                )),
+                          ),
+                        ],
+                      ),
                     );
                   },
                 ),
@@ -918,4 +928,42 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+}
+
+class RadialPageRoute extends PageRouteBuilder {
+  final Widget child;
+  final Offset center;
+
+  RadialPageRoute({required this.child, required this.center})
+      : super(
+    pageBuilder: (context, animation, secondaryAnimation) => child,
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      // Create a circular reveal effect
+      var curvedAnimation = CurvedAnimation(
+        parent: animation,
+        curve: Curves.easeInOut,
+      );
+
+      // Use the radial effect for transition
+      return ClipPath(
+        clipper: CircularRevealClipper(center: center, animation: curvedAnimation),
+        child: child,
+      );
+    },
+  );
+}
+class CircularRevealClipper extends CustomClipper<Path> {
+  final Offset center;
+  final Animation<double> animation;
+
+  CircularRevealClipper({required this.center, required this.animation}) : super(reclip: animation);
+
+  @override
+  Path getClip(Size size) {
+    final radius = animation.value * (size.width + size.height);
+    return Path()..addOval(Rect.fromCircle(center: center, radius: radius));
+  }
+
+  @override
+  bool shouldReclip(CircularRevealClipper oldClipper) => true;
 }
