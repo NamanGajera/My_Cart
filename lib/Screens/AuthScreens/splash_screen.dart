@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:my_cart/Screens/AuthScreens/login_screen.dart';
+import 'package:my_cart/Screens/Widgets/bottom_nav_bar.dart';
 import 'package:my_cart/Utils/colors.dart';
+import 'package:my_cart/Utils/const.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -19,9 +22,23 @@ class _SplashScreenState extends State<SplashScreen> {
     Splash();
   }
 
-  Splash(){
+  Splash() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+   bool? isLogin = await prefs.getBool('isLogin');
+   var accessToken1 = await prefs.getString('accessToken');
+   var email1 = await prefs.getString('userEmail');
+
+   accessToken = accessToken1;
+   userEmail = email1;
+   print('accessToken ====>>> ${accessToken1}');
+
     Future.delayed(Duration(seconds: 2),(){
-      Navigator.of(context).push(MaterialPageRoute(builder: (context)=>LoginScreen()));
+      if (accessToken1 == null || accessToken1.isEmpty || isLogin == null || isLogin == false || email1 == null) {
+        Navigator.of(context).push(MaterialPageRoute(builder: (context)=>LoginScreen()));
+      }else{
+        Navigator.of(context).push(MaterialPageRoute(builder: (context)=>BottomNavBar()));
+      }
+
     });
   }
   @override

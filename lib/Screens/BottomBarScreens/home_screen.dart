@@ -5,7 +5,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
-import 'package:my_cart/Screens/HomeScreen/product_details_screen.dart';
+import 'package:my_cart/Screens/OtherScreens/product_details_screen.dart';
 import 'package:my_cart/Utils/colors.dart';
 
 class HomeScreen extends StatefulWidget {

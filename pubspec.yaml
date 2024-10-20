@@ -14,6 +14,12 @@ dependencies:
 
   cupertino_icons: ^1.0.6
 
+  # Bloc
+  flutter_bloc: ^8.1.6
+
+  # Shared preferences
+  shared_preferences: ^2.3.2
+
   # Svg
   flutter_svg: ^2.0.10+1
 
@@ -22,6 +28,9 @@ dependencies:
 
   # Carousel Slider
   carousel_slider: ^5.0.0
+
+  # HTTP
+  http: ^1.2.2
 
   intl: ^0.19.0
 

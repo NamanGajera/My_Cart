@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:my_cart/Screens/CheckoutScreens/checkout_screen.dart';
 import 'package:my_cart/Utils/colors.dart';
 
 class CartScreen extends StatefulWidget {
@@ -182,26 +183,32 @@ class _CartScreenState extends State<CartScreen> {
       backgroundColor: Colors.white,
       bottomSheet: Material(
         color: Colors.white,
-        child: Container(
-          height: 65,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: Colors.transparent,
-          ),
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-            child: Container(
-              decoration: BoxDecoration(
-                color: primaryGreenColor,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Center(
-                child: Text(
-                  'CHECKOUT ${NumberFormat.currency(locale: 'en_IN', symbol: '₹').format(int.parse('${_calculateGrandTotal()}'))}',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
+        child: GestureDetector(
+          onTap: () {
+            Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => CheckoutScreen()));
+          },
+          child: Container(
+            height: 65,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: Colors.transparent,
+            ),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: primaryGreenColor,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Center(
+                  child: Text(
+                    'CHECKOUT ${NumberFormat.currency(locale: 'en_IN', symbol: '₹').format(int.parse('${_calculateGrandTotal()}'))}',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 ),
               ),
